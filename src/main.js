@@ -52,9 +52,18 @@ angular.module('app', ['d3.promise'])
       var options = skeleton.options();
       // var color = d3.scale.category10();
       var color = d3.scale.ordinal()
-        .range(['#779ecb', '#c23b22', '#836953',
-          '#68C677', // pastel green
-          '#aec6cf', '#cb99c9', '#ffb347', '#b39eb5', '#966FD6', '#f49ac2']);
+        .range([
+          '#779ecb', // blue
+          '#C2573C', // red
+          '#836953', // brown
+          '#7DC68E', // green
+          '#aec6cf', // light blue
+          '#cb99c9', // magenta
+          '#EEAC68', // orange
+          '#687C58', // light purple
+          '#966FD6', // purple
+          '#417C4B'  // dark green
+        ]);
 
       skeleton.on('data', visualize);
 
@@ -156,8 +165,6 @@ angular.module('app', ['d3.promise'])
   })
   .controller('mainCtrl', function($scope, dataService, Vis){
     var chart = new Vis('#chart');
-
-
 
     dataService.loadData().then(function(data){
       chart.data(data);
