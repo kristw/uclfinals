@@ -73,13 +73,13 @@
           </div>
           <div class="control-box">
             <i>Sort matches by:</i> &nbsp;
-            <a href="#" ng-class="{active: options.sortBy==='time'}" ng-click="sortBy('time')">time</a>
+            <a href="#" ng-class="{active: options.sortBy==='time'}" ng-click="sortBy('time', $event)">time</a>
             |
-            <a href="#" ng-class="{active: options.sortBy==='win'}" ng-click="sortBy('win')">winners</a>
+            <a href="#" ng-class="{active: options.sortBy==='win'}" ng-click="sortBy('win', $event)">winners</a>
             |
-            <a href="#" ng-class="{active: options.sortBy==='lost'}" ng-click="sortBy('lost')">runners-up</a>
+            <a href="#" ng-class="{active: options.sortBy==='lost'}" ng-click="sortBy('lost', $event)">runners-up</a>
             |
-            <a href="#" ng-class="{active: options.sortBy==='pair'}" ng-click="sortBy('pair')">finalists</a>
+            <a href="#" ng-class="{active: options.sortBy==='pair'}" ng-click="sortBy('pair', $event)">finalists</a>
           </div>
         </header>
 

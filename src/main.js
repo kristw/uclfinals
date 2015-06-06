@@ -279,10 +279,11 @@ angular.module('app', ['d3.promise'])
 
     $scope.options = chart.options();
 
-    $scope.sortBy = function(mode){
+    $scope.sortBy = function(mode, event){
       chart.options({
         sortBy: mode
       });
+      event.preventDefault();
     };
 
     dataService.loadData().then(function(data){
