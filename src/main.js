@@ -148,6 +148,31 @@ angular.module('app', ['d3.promise'])
             });
         }
         else if(options.sortBy==='pair'){
+          nest = d3.nest()
+            .key(function(d){return d.pair;})
+            .sortValues(function(a,b){
+              if(a.winners.name!==b.winners.name){
+                return a.winners.name.localeCompare(b.winners.name);
+              }
+              return d3.ascending(a.year, b.year);
+            })
+            .entries(data.matches);
+
+          i=0;
+          nest.sort(function(a, b){
+              var aCount = data.pairLookup[a.key];
+              var bCount = data.pairLookup[b.key];
+              if(aCount!==bCount){
+                return bCount - aCount;
+              }
+              return a.key.localeCompare(b.key);
+            })
+            .forEach(function(group){
+              group.values.forEach(function(match){
+                match.index = i;
+                i++;
+              });
+            });
 
         }
 
@@ -177,9 +202,7 @@ angular.module('app', ['d3.promise'])
           .text(function(d){return d.name;});
 
         sEnter.append('line')
-          .style('stroke-width', 1)
-          .style('stroke', '#777')
-          .style('stroke-dasharray', '2,2')
+          .classed('team-line', true)
           .attr('x1', 6)
           .attr('x2', skeleton.getInnerWidth()-150);
 
@@ -202,12 +225,9 @@ angular.module('app', ['d3.promise'])
           .attr('r', 4);
 
         edgesEnter.append('circle')
-
+          .classed('loser-circle', true)
           .attr('cy', runnersUpPos)
-          .attr('r', 4)
-          .style('fill', '#fff')
-          .style('stroke', '#222')
-          .style('stroke-width', 1);
+          .attr('r', 4);
 
         edgesEnter.append('g')
             .attr('transform', 'rotate(-90)')
@@ -257,7 +277,12 @@ angular.module('app', ['d3.promise'])
   .controller('mainCtrl', function($scope, dataService, Vis){
     var chart = new Vis('#chart');
 
+    $scope.options = {
+      sortBy: 'time'
+    };
+
     $scope.sortBy = function(mode){
+      $scope.options.sortBy = mode;
       chart.options({
         sortBy: mode
       });

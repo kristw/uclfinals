@@ -19,7 +19,8 @@
     <meta property="og:site_name" content="kristw.yellowpigz.com"/>
     <meta property="og:type" content="article" />
     <meta property="article:author" content="https://twitter.com/kristw" />
-    <meta property="og:url" content="http://kristw.github.io/uclfinals/index.html" />
+    <meta property="og:url" content="
+    http://kristw.github.io/uclfinals/index.html" />
     <meta property="og:description" content="All European Cup and UEFA Champions League Finals since 1956, visualized." />
     <meta property="og:image" content="http://kristw.github.io/uclfinals/images/thumbnail.png"/>
 
@@ -43,7 +44,7 @@
       <div class="chart-container box">
         <header>
 
-          <div class="tweet-box">
+          <div class="social-box">
             <div style="float:left">
               <div class="fb-like" data-href="http://kristw.github.io/uclfinals/index.html" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
             </div>
@@ -62,7 +63,7 @@
             The History of European Cup and UEFA Champions League Finals
           </h1>
 
-          <div class="intro">
+          <div class="intro-box">
             <p>
               A total of 22 clubs have won the Champions League/European Cup. Real Madrid hold the record for the most victories, having won the competition ten times, including the inaugural competition. They have also won the competition the most times in a row, winning it five times from 1956 to 1960.
             </p>
@@ -70,7 +71,18 @@
               All teams that had participated in the finals are included in the chart below. The teams (rows) are color-coded and grouped by nation. The horizontal axis represents time from left to right. Each column is one year of the competition. Each vertical line represents the final match of that season and its two ends mark the finalists. Solid and hollow circles indicate winners and runners-up, respectively.
             </p>
           </div>
+          <div class="control-box">
+            <i>Sort matches by:</i> &nbsp;
+            <a href="#" ng-class="{active: options.sortBy==='time'}" ng-click="sortBy('time')">time</a>
+            |
+            <a href="#" ng-class="{active: options.sortBy==='win'}" ng-click="sortBy('win')">winners</a>
+            |
+            <a href="#" ng-class="{active: options.sortBy==='lost'}" ng-click="sortBy('lost')">runners-up</a>
+            |
+            <a href="#" ng-class="{active: options.sortBy==='pair'}" ng-click="sortBy('pair')">finalists</a>
+          </div>
         </header>
+
         <div id="chart"></div>
         <footer>
           Data from <a href="http://en.wikipedia.org/wiki/List_of_European_Cup_and_UEFA_Champions_League_finals">Wikipedia</a>, visualized by Krist Wongsuphasawat (<a href="https://twitter.com/kristw">@kristw</a>)

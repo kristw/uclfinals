@@ -20,18 +20,22 @@ h1{
   color: #3b3c36;
 }
 
-.intro{
+.intro-box{
   padding: 0px 30px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
-.intro p{
+.intro-box p{
   text-align: justify;
   color: #3b3c36;
   font-size: 16px;
 }
 
-.tweet-box{
+.social-box{
   text-align: right;
+}
+
+.control-box{
+  padding-bottom: 20px;
 }
 
 .chart-container{
@@ -46,27 +50,49 @@ footer{
   padding-bottom: 25px;
 }
 
+/* Generic */
+
 a, a:link, a:visited{
   text-decoration: none;
   color: #779ecb;
+}
+
+a.active{
+  color: #000;
 }
 
 a:hover{
   text-decoration: underline;
 }
 
-svg text{
+/* SVGs */
+
+text{
   font-size: 13px;
 }
 
-svg text.title{
+line.team-line{
+  stroke-width: 1;
+  stroke: #777;
+  stroke-dasharray: 2,2;
+}
+
+text.title{
   font-size: 30px;
   text-anchor: middle;
 }
 
-svg text.year-label{
+text.year-label{
   text-anchor: end;
 }
+
+circle.loser-circle{
+  fill: #fff;
+  stroke: #222;
+  stroke-width: 1px;
+}
+
+/* Paper-like effects */
 
 .box
 {
