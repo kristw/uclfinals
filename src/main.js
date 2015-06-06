@@ -277,12 +277,9 @@ angular.module('app', ['d3.promise'])
   .controller('mainCtrl', function($scope, dataService, Vis){
     var chart = new Vis('#chart');
 
-    $scope.options = {
-      sortBy: 'time'
-    };
+    $scope.options = chart.options();
 
     $scope.sortBy = function(mode){
-      $scope.options.sortBy = mode;
       chart.options({
         sortBy: mode
       });
