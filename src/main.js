@@ -52,7 +52,9 @@ angular.module('app', ['d3.promise'])
       var options = skeleton.options();
       // var color = d3.scale.category10();
       var color = d3.scale.ordinal()
-        .range(['#779ecb', '#c23b22', '#836953', '#77dd77', '#aec6cf', '#cb99c9', '#ffb347', '#b39eb5', '#966FD6', '#f49ac2']);
+        .range(['#779ecb', '#c23b22', '#836953',
+          '#68C677', // pastel green
+          '#aec6cf', '#cb99c9', '#ffb347', '#b39eb5', '#966FD6', '#f49ac2']);
 
       skeleton.on('data', visualize);
 
@@ -67,7 +69,8 @@ angular.module('app', ['d3.promise'])
           team.index = i;
         });
 
-        skeleton.height(data.teams.length*20 + options.margin.top+options.margin.bottom);
+        skeleton.height(data.teams.length*20 + options.margin.top + options.margin.bottom);
+        skeleton.width(yearPos({year: 2015}) + 10 + options.margin.left + options.margin.right);
 
         var selection = skeleton.getRootG().selectAll('g.team')
           .data(data.teams, function(d){return d.name;});
@@ -90,7 +93,7 @@ angular.module('app', ['d3.promise'])
           .style('stroke-width', 1)
           .style('stroke', '#777')
           .style('stroke-dasharray', '2,2')
-          .attr('x1', 4)
+          .attr('x1', 6)
           .attr('x2', skeleton.getInnerWidth()-150);
 
         var edges = skeleton.getRootG().selectAll('g.match')
@@ -138,7 +141,7 @@ angular.module('app', ['d3.promise'])
       }
 
       function yearPos(d){
-        return 150 + (d.year-1955) * 14 + 20;
+        return 150 + (d.year-1955) * 13 + 20;
       }
 
       function winnerPos(d){
