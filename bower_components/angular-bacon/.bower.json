@@ -1,0 +1,30 @@
+{
+  "name": "angular-bacon",
+  "version": "2.0.0",
+  "main": "dist/angular-bacon.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "bacon": "~0.7",
+    "angular": ">=1.2"
+  },
+  "devDependencies": {
+    "mocha": "1.9.0",
+    "chai": "1.6.0",
+    "angular-mocks": ">=1.2"
+  },
+  "homepage": "https://github.com/lauripiispanen/angular-bacon",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.0",
+    "commit": "3f63077b769895bf09fbb6872c84a82ac4022bd8"
+  },
+  "_source": "git://github.com/lauripiispanen/angular-bacon.git",
+  "_target": "~2.0.0",
+  "_originalSource": "angular-bacon",
+  "_direct": true
+}
