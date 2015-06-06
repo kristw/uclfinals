@@ -55,7 +55,7 @@ angular.module('app', ['d3.promise'])
       margin: {top: 30, left: 40, right: 40, bottom: 30},
       initialWidth: 1100,
       initialHeight: 600,
-      sortBy: 'lost',
+      sortBy: 'time',
       minRadius: 5,
       maxRadius: 26
     }, [], function(skeleton){
