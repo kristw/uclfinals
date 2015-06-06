@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>The History of Champions League Final</title>
+    <title>The History of European Cup and UEFA Champions League Finals</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,10 +14,28 @@
   </head>
   <body ng-app="app">
 
-    <div ng-controller="mainCtrl">
+    <article ng-controller="mainCtrl">
       <!-- Add your site or application content here -->
-      <div id="chart"></div>
-    </div>
+      <div class="chart-container box">
+        <header>
+          <h1>
+            The History of European Cup and UEFA Champions League Finals
+          </h1>
+          <div class="intro">
+            <p>
+              A total of 22 clubs have won the Champions League/European Cup. Real Madrid hold the record for the most victories, having won the competition ten times, including the inaugural competition. They have also won the competition the most times in a row, winning it five times from 1956 to 1960.
+            </p>
+            <p>
+              All teams that had participated in the finals are included in the chart below. The teams (rows) are color-coded and grouped by nation. The horizontal axis represents time from left to right. Each column is one year of the competition. Each vertical line represents the final match of that season and its two ends mark the finalists. Solid and hollow circles indicate winners and runners-up, respectively.
+            </p>
+          </div>
+        </header>
+        <div id="chart"></div>
+        <footer>
+          Data from <a href="http://en.wikipedia.org/wiki/List_of_European_Cup_and_UEFA_Champions_League_finals">Wikipedia</a>, visualized by <a href="https://twitter.com/kristw">@kristw</a>
+        </footer>
+      </div>
+    </article>
 
     <!--[if lt IE 8]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -27,7 +45,7 @@
     <script src="bower_components/d3kit/dist/d3kit.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-d3-promise/src/angular-d3-promise.min.js"></script>
-    <script src="bower_components/physicsjs/dist/physicsjs-full.min.js"></script>
+    <!-- <script src="bower_components/physicsjs/dist/physicsjs-full.min.js"></script> -->
 
     <script src="src/main.js"></script>
 

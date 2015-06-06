@@ -1,17 +1,101 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif:400,400italic|Vollkorn:400italic,400);
+
 body{
-  font-family: 'Georgia', 'Helvetica Neue', sans-serif;
+  font-family: 'Vollkorn', 'Georgia', serif;
+  width: 100%;
+  margin: 30px auto;
+  text-align: center;
 }
 
-svg{
+.chart-container{
+  display: inline-block;
   background-color: #eee;
   background-image: url('../images/ricepaper/ricepaper.png')
 }
 
-svg text{
+header{
+  text-align: center;
+}
+h1{
+  margin-top: 40px;
+  font-weight: normal;
+  font-size: 36px;
+  font-style: italic;
+  color: #3b3c36;
+}
+
+.intro{
+  padding: 0px 30px;
+  padding-bottom: 20px;
+}
+.intro p{
+  text-align: justify;
+  color: #3b3c36;
+  font-size: 15px;
+}
+
+footer{
+  text-align: center;
   font-size: 12px;
+  padding-bottom: 25px;
+}
+
+a, a:link, a:visited{
+  text-decoration: none;
+  color: #779ecb;
+}
+a:hover{
+  text-decoration: underline;
+}
+
+svg text{
+  font-size: 13px;
 }
 
 svg text.title{
   font-size: 30px;
   text-anchor:middle;
+}
+
+.box
+{
+  position: relative;
+  width: 1100px;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.box:before, .box:after
+{
+  position: absolute;
+  width: 40%;
+  height: 10px;
+  content: ' ';
+  left: 12px;
+  bottom: 24px;
+  background: transparent;
+  -webkit-transform: skew(-5deg) rotate(-5deg);
+  -moz-transform: skew(-5deg) rotate(-5deg);
+  -ms-transform: skew(-5deg) rotate(-5deg);
+  -o-transform: skew(-5deg) rotate(-5deg);
+  transform: skew(-5deg) rotate(-5deg);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
+.box:after
+{
+  left: auto;
+  right: 12px;
+  -webkit-transform: skew(5deg) rotate(5deg);
+  -moz-transform: skew(5deg) rotate(5deg);
+  -ms-transform: skew(5deg) rotate(5deg);
+  -o-transform: skew(5deg) rotate(5deg);
+  transform: skew(5deg) rotate(5deg);
 }

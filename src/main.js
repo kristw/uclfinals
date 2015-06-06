@@ -42,7 +42,7 @@ angular.module('app', ['d3.promise'])
   })
   .factory('Vis', function(){
     return d3Kit.factory.createChart({
-      margin: {top: 140, left: 40, right: 40, bottom: 50},
+      margin: {top: 30, left: 40, right: 40, bottom: 30},
       initialWidth: 1100,
       initialHeight: 600,
       minRadius: 5,
@@ -60,19 +60,14 @@ angular.module('app', ['d3.promise'])
         var data = skeleton.data();
 
         data.teams.sort(function(a,b){
-          return a.nation.name.localeCompare(b.nation.name);
+          var score = a.nation.name.localeCompare(b.nation.name);
+          return score!==0 ? score : a.name.localeCompare(b.name);
         })
         .forEach(function(team, i){
           team.index = i;
         });
 
         skeleton.height(data.teams.length*20 + options.margin.top+options.margin.bottom);
-
-        skeleton.getRootG().append('text')
-          .attr('x', skeleton.getInnerWidth()/2)
-          .attr('y', -70)
-          .classed('title', true)
-          .text('European Cup and UEFA Champions League Finals');
 
         var selection = skeleton.getRootG().selectAll('g.team')
           .data(data.teams, function(d){return d.name;});
@@ -130,7 +125,7 @@ angular.module('app', ['d3.promise'])
           .attr('x', function(d){return 8-Math.min(winnerPos(d), runnersUpPos(d));})
           .attr('y', 3)
           .text(function(d){
-            return d.score; //d.year;
+            return d.special ? d.score + '  / '+ d.special : d.score; //d.year;
           });
 
         edgesEnter.append('g')
