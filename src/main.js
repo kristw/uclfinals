@@ -17,6 +17,8 @@ angular.module('app', ['d3.promise'])
 
         data.teams = data.teams.map(function(team){
           team.nation = data.nationLookup[team.nation];
+          team.winCount = 0;
+          team.lostCount = 0;
           return team;
         });
 
@@ -25,10 +27,18 @@ angular.module('app', ['d3.promise'])
           return prev;
         }, {});
 
-        data.matches = data.matches.map(function(match){
+        data.pairLookup = data.matches.reduce(function(prev, match){
           match.pair = [match.winners, match.runnersUp].sort(function(a,b){ return a.localeCompare(b); }).join('/');
+          prev[match.pair] = prev[match.pair] ? prev[match.pair]+1 : 1;
+          return prev;
+        }, {});
+
+        data.matches = data.matches.map(function(match){
+          match.pairCount = data.pairLookup[match.pair];
           match.winners = data.teamLookup[match.winners];
+          match.winners.winCount++;
           match.runnersUp = data.teamLookup[match.runnersUp];
+          match.runnersUp.lostCount++;
           match.year = +match.year;
           match.attendance = +match.attendance;
           return match;
@@ -45,6 +55,7 @@ angular.module('app', ['d3.promise'])
       margin: {top: 30, left: 40, right: 40, bottom: 30},
       initialWidth: 1100,
       initialHeight: 600,
+      sortBy: 'lost',
       minRadius: 5,
       maxRadius: 26
     }, [], function(skeleton){
@@ -65,18 +76,85 @@ angular.module('app', ['d3.promise'])
           '#417C4B'  // dark green
         ]);
 
-      skeleton.on('data', visualize);
-
-      function visualize(){
-        var data = skeleton.data();
-
+      skeleton.on('data', function(data){
         data.teams.sort(function(a,b){
-          var score = a.nation.name.localeCompare(b.nation.name);
-          return score!==0 ? score : a.name.localeCompare(b.name);
+          if(a.nation.name!==b.nation.name){
+            return a.nation.name.localeCompare(b.nation.name);
+          }
+          return a.name.localeCompare(b.name);
         })
         .forEach(function(team, i){
           team.index = i;
         });
+
+        visualize();
+      });
+
+      skeleton.on('options', visualize);
+
+      function visualize(){
+        var data = skeleton.data();
+
+        var nest, i;
+        if(options.sortBy==='time'){
+          data.matches.forEach(function(match){
+            match.index = match.year - 1956;
+          });
+        }
+        else if(options.sortBy==='win'){
+          nest = d3.nest()
+            .key(function(d){return d.winners.name;})
+            .sortValues(function(a,b){ return d3.ascending(a.year, b.year); })
+            .entries(data.matches);
+
+          i=0;
+          nest.sort(function(a, b){
+              if(a.values[0].winners.winCount!==b.values[0].winners.winCount){
+                return b.values[0].winners.winCount - a.values[0].winners.winCount;
+              }
+              if(a.values[0].winners.nation.name!==b.values[0].winners.nation.name){
+                return a.values[0].winners.nation.name.localeCompare(b.values[0].winners.nation.name);
+              }
+              return a.key.localeCompare(b.key);
+            })
+            .forEach(function(group){
+              group.values.forEach(function(match){
+                match.index = i;
+                i++;
+              });
+            });
+        }
+        else if(options.sortBy==='lost'){
+          nest = d3.nest()
+            .key(function(d){return d.runnersUp.name;})
+            .sortValues(function(a,b){ return d3.ascending(a.year, b.year); })
+            .entries(data.matches);
+
+          i=0;
+          nest.sort(function(a, b){
+              if(a.values[0].runnersUp.lostCount!==b.values[0].runnersUp.lostCount){
+                return b.values[0].runnersUp.lostCount - a.values[0].runnersUp.lostCount;
+              }
+              if(a.values[0].runnersUp.nation.name!==b.values[0].runnersUp.nation.name){
+                return a.values[0].runnersUp.nation.name.localeCompare(b.values[0].runnersUp.nation.name);
+              }
+              return a.key.localeCompare(b.key);
+            })
+            .forEach(function(group){
+              group.values.forEach(function(match){
+                match.index = i;
+                i++;
+              });
+            });
+        }
+        else if(options.sortBy==='pair'){
+
+        }
+
+        data.matches
+          .forEach(function(match){
+            match.x = xPos(match.index);
+          });
 
         skeleton.height(data.teams.length*20 + options.margin.top + options.margin.bottom);
         skeleton.width(yearPos({year: 2015}) + 10 + options.margin.left + options.margin.right);
@@ -89,7 +167,7 @@ angular.module('app', ['d3.promise'])
           .attr('transform', function(d, i){return 'translate('+(150)+','+(i* 20)+')';});
 
         sEnter.append('circle')
-          .style('fill', function(d){return color(d.nation.name);})
+          .style('fill', teamColor)
           .attr('r', options.minRadius);
 
         sEnter.append('text')
@@ -110,11 +188,10 @@ angular.module('app', ['d3.promise'])
 
         var edgesEnter = edges.enter().append('g')
           .classed('match', true)
-          .attr('transform', function(d){return 'translate('+(yearPos(d))+','+(0)+')';});
+          .attr('transform', function(d){return 'translate('+(d.x)+','+(0)+')';});
 
         edgesEnter.append('line')
           .style('stroke-width', 2)
-          // .style('stroke', '#000')
           .style('stroke', function(d){return color(d.winners.nation.name);})
           .attr('y1', winnerPos)
           .attr('y2', runnersUpPos);
@@ -125,6 +202,7 @@ angular.module('app', ['d3.promise'])
           .attr('r', 4);
 
         edgesEnter.append('circle')
+
           .attr('cy', runnersUpPos)
           .attr('r', 4)
           .style('fill', '#fff')
@@ -132,25 +210,34 @@ angular.module('app', ['d3.promise'])
           .style('stroke-width', 1);
 
         edgesEnter.append('g')
-          .attr('transform', 'rotate(-90)')
+            .attr('transform', 'rotate(-90)')
           .append('text')
-          .attr('x', function(d){return 8-Math.min(winnerPos(d), runnersUpPos(d));})
-          .attr('y', 3)
-          .text(function(d){
-            return d.special ? d.score + '  / '+ d.special : d.score; //d.year;
-          });
+            .classed('score-label', true)
+            .attr('x', function(d){return 8-Math.min(winnerPos(d), runnersUpPos(d));})
+            .attr('y', 3)
+            .text(function(d){
+              return d.special ? d.score + '  / '+ d.special : d.score; //d.year;
+            });
 
         edgesEnter.append('g')
-          .attr('transform', 'rotate(-90)')
+            .attr('transform', 'rotate(-90)')
           .append('text')
-          .attr('x', function(d){return -8-Math.max(winnerPos(d), runnersUpPos(d));})
-          .attr('y', 3)
-          .style('text-anchor', 'end')
-          .text(function(d){return d.year;});
+            .classed('year-label', true)
+            .attr('x', function(d){return -8-Math.max(winnerPos(d), runnersUpPos(d));})
+            .attr('y', 3)
+            .text(function(d){return d.year;});
+
+        edges.transition()
+          .delay(function(d,i){return i*10;})
+          .attr('transform', function(d){return 'translate('+(d.x)+','+(0)+')';});
       }
 
       function yearPos(d){
-        return 150 + (d.year-1955) * 13 + 20;
+        return xPos(d.year-1956);
+      }
+
+      function xPos(index){
+        return 150 + (index+1) * 13 + 20;
       }
 
       function winnerPos(d){
@@ -161,10 +248,20 @@ angular.module('app', ['d3.promise'])
         return d.runnersUp.index * 20;
       }
 
+      function teamColor(team){
+        return color(team.nation.name);
+      }
+
     });
   })
   .controller('mainCtrl', function($scope, dataService, Vis){
     var chart = new Vis('#chart');
+
+    $scope.sortBy = function(mode){
+      chart.options({
+        sortBy: mode
+      });
+    };
 
     dataService.loadData().then(function(data){
       chart.data(data);
