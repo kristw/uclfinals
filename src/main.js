@@ -275,18 +275,18 @@ angular.module('app', ['d3.promise'])
     });
   })
   .controller('mainCtrl', function($scope, dataService, Vis){
-    var chart = new Vis('#chart');
+    var vis = new Vis('#vis');
 
-    $scope.options = chart.options();
+    $scope.options = vis.options();
 
     $scope.sortBy = function(mode, event){
-      chart.options({
+      vis.options({
         sortBy: mode
       });
       event.preventDefault();
     };
 
     dataService.loadData().then(function(data){
-      chart.data(data);
+      vis.data(data);
     });
   });
