@@ -39,55 +39,73 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 
-    <article ng-controller="mainCtrl">
+    <article class="paper box" ng-controller="mainCtrl">
       <!-- Add your site or application content here -->
-      <div class="chart-container box">
-        <header>
-
-          <div class="social-box">
-            <div style="float:left">
-              <div class="fb-like" data-href="http://kristw.github.io/uclfinals/index.html" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-            </div>
-            <a class="twitter-follow-button"
-              href="https://twitter.com/kristw"
-              data-show-count="false"
-              data-lang="en">
-              Follow @kristw
-            </a>
-            <a class="twitter-share-button"
-              href="https://twitter.com/share">
-              Tweet
-            </a>
+      <header>
+        <div class="social-box">
+          <div style="float:left">
+            <div class="fb-like" data-href="http://kristw.github.io/uclfinals/index.html" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
           </div>
-          <h1>
-            The History of European Cup and UEFA Champions League Finals
-          </h1>
+          <a class="twitter-follow-button"
+            href="https://twitter.com/kristw"
+            data-show-count="false"
+            data-lang="en">
+            Follow @kristw
+          </a>
+          <a class="twitter-share-button"
+            href="https://twitter.com/share">
+            Tweet
+          </a>
+        </div>
 
-          <div class="intro-box">
-            <p>
-              A total of 22 clubs have won the Champions League/European Cup. Real Madrid hold the record for the most victories, having won the competition ten times, including the inaugural competition. They have also won the competition the most times in a row, winning it five times from 1956 to 1960.
-            </p>
-            <p>
-              All teams that had participated in the finals are included in the chart below. The teams (rows) are color-coded and grouped by nation. The horizontal axis represents time from left to right. Each column is one year of the competition. Each vertical line represents the final match of that season and its two ends mark the finalists. Solid and hollow circles indicate winners and runners-up, respectively.
-            </p>
-          </div>
-          <div class="control-box">
-            <i>Sort matches by:</i> &nbsp;
-            <a href="#" ng-class="{active: options.sortBy==='time'}" ng-click="sortBy('time', $event)">time</a>
-            |
-            <a href="#" ng-class="{active: options.sortBy==='win'}" ng-click="sortBy('win', $event)">winners</a>
-            |
-            <a href="#" ng-class="{active: options.sortBy==='lost'}" ng-click="sortBy('lost', $event)">runners-up</a>
-            |
-            <a href="#" ng-class="{active: options.sortBy==='pair'}" ng-click="sortBy('pair', $event)">finalists</a>
-          </div>
-        </header>
+        <h1>
+          The History of European Cup and UEFA Champions League Finals
+        </h1>
 
-        <div id="chart"></div>
-        <footer>
-          Data from <a href="http://en.wikipedia.org/wiki/List_of_European_Cup_and_UEFA_Champions_League_finals">Wikipedia</a>, visualized by Krist Wongsuphasawat (<a href="https://twitter.com/kristw">@kristw</a>)
-        </footer>
-      </div>
+        <p>
+          All teams that had participated in the finals are included in the chart below. The teams (rows) are color-coded and grouped by nation. The horizontal axis represents time from left to right. Each column is one year of the competition. Each vertical line represents the final match of that season and its two ends mark the finalists. Solid and hollow circles indicate winners and runners-up, respectively.
+        </p>
+        <div class="control-box">
+          <i>Sort matches by:</i> &nbsp;
+          <a href="#" ng-class="{active: options.sortBy==='time'}" ng-click="sortBy('time', $event)">time</a>
+          |
+          <a href="#" ng-class="{active: options.sortBy==='win'}" ng-click="sortBy('win', $event)">winners</a>
+          |
+          <a href="#" ng-class="{active: options.sortBy==='lost'}" ng-click="sortBy('lost', $event)">runners-up</a>
+          |
+          <a href="#" ng-class="{active: options.sortBy==='pair'}" ng-click="sortBy('pair', $event)">finalists</a>
+        </div>
+        <div ng-switch on="options.sortBy">
+          <p class="analysis" data-ng-switch-when="time">
+            <i>What does the chart tell you?</i> &mdash;
+            A total of 22 clubs have won the Champions League/European Cup. Real Madrid won the first competition held in 1956. They have also won the competition the most times in a row, winning the first five times from 1956 to 1960. The closest achievements were Ajax and Bayern Munich who won the trophies three times in a row in 1971-1973 and 1974-1976, respectively. Since the competition was renamed to the UEFA Champions League in 1992, none of the champions have been able to defend their crown yet.
+          </p>
+
+          <p class="analysis" data-ng-switch-when="time">
+            The colors also highlight dominant nations in each era. Spain and Portugal dominated in the early days, followed by a few years of Italian teams. Then it was the Dutch era with Feyenoord and Ajax. Bayern Munich brought the tropies to Germany for a few years, followed by several years of English domination. The momentum swung to Italy for several years before coming back to the Spanish giants: Real Madrid and, of course, the otherworldly Barcelona.
+          </p>
+
+          <p class="analysis" data-ng-switch-when="win">
+            <i>What does the chart tell you?</i> &mdash;
+            A total of 22 clubs have won the tournament since its 1955 inception, with Real Madrid being the only team to win it 10 times, including the first five. Only two other clubs have reached 10 finals; AC Milan and Bayern Munich. A total of 12 clubs have won the tournament multiple times; the three aforementioned clubs, along with Liverpool, Ajax, Barcelona, Internazionale, Manchester United, Benfica, Nottingham Forest, Juventus, and Porto. A total of 17 clubs have reached the final without ever managing to win the tournament. <a href="http://en.wikipedia.org/wiki/European_Cup_and_UEFA_Champions_League_records_and_statistics#/General_performances">More information...</a>
+          </p>
+
+          <p class="analysis" data-ng-switch-when="lost">
+            <i>What does the chart tell you?</i> &mdash;
+            When it comes to being heartbroken, Juventus is the most experienced team in this sense. Losing in the final for six times. Bayern Munich and Benfica are close behind with five defeats each. Milan also had four tearful moments but they are quite successfull overall and won seven times. Real Madrid and Barcelona had their shares of defeats, three each. <a href="http://en.wikipedia.org/wiki/European_Cup_and_UEFA_Champions_League_records_and_statistics#/General_performances">More information...</a>
+          </p>
+
+          <p class="analysis" data-ng-switch-when="pair">
+            <i>What does the chart tell you?</i> &mdash;
+            The probability is not that high for two teams to meet each other again in the finals. However, these had happened a few times. As of 2015, none of the teams have met more than twice in the finals. Some teams were able to get their revenges (Juventus on Ajax, Milan on Ajax and Milan on Ajax). Seems like the Italians are the best at getting their revenges. Other teams are not that lucky and had to repeat similar nightmares. For example, Pep Guardiola's Barcelona was proven too hard for Manchester United to handle, twice.
+          </p>
+        </div>
+      </header>
+
+      <div id="chart"></div>
+      <footer>
+        Data from <a href="http://en.wikipedia.org/wiki/List_of_European_Cup_and_UEFA_Champions_League_finals">Wikipedia</a>, visualized by Krist Wongsuphasawat (<a href="https://twitter.com/kristw">@kristw</a>)
+      </footer>
     </article>
 
     <!--[if lt IE 8]>
