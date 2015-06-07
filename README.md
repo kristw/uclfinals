@@ -1,6 +1,6 @@
 ### The History of European Cup and Champions League Finals
 
-On the night before the UEFA Champions League final between Barcelona and Juventus in 2015, I pulled data from [Wikipedia](http://en.wikipedia.org/wiki/List_of_European_Cup_and_UEFA_Champions_League_finals) and hacked together this visualization. You can view it at [https://kristw.github.io/uclfinals](https://kristw.github.io/uclfinals/index.html)
+On the night before the UEFA Champions League final between Barcelona and Juventus in 2015, I pulled data from [Wikipedia](http://en.wikipedia.org/wiki/List_of_European_Cup_and_UEFA_Champions_League_finals) and hacked together this visualization. You can view it at [http://kristw.github.io/uclfinals](http://kristw.github.io/uclfinals/index.html).
 
 The visualizaton was built using
 
